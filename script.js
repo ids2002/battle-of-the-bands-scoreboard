@@ -30,7 +30,9 @@ function renderLeaderboard(data) {
   if (!tbody) return;
 
   tbody.innerHTML = '';
-  data.forEach(([rank, name, score]) => {
+  data.forEach(row => {
+    const bandName = row['Band Name'] || '';
+    const safeName = bandName.toLowerCase();
     const row = document.createElement('tr');
     row.innerHTML = `<td>${rank}</td><td>${name}</td><td>${score}</td>`;
     if (rank === '--' || name.toLowerCase().includes('player')) {
