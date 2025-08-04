@@ -5,7 +5,7 @@ function setStyle(styleName) {
   }
 }
 
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/YOUR_SHEET_ID/pub?output=csv'; // replace with your actual published sheet URL
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVnQpHFVXKj-TesONikDj1kSG-4pNIYymZSPODYqyrMlMBDml8_qVsUrvxTpS5KTL_p6hncoC/pubhtml?gid=946014061&single=true'; // replace with your actual published sheet URL
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchLeaderboardData();
