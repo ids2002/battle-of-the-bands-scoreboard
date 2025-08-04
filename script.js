@@ -16,21 +16,27 @@ document.addEventListener('DOMContentLoaded', () => {
 async function fetchLeaderboardData() {
   try {
     const response = await fetch(SHEET_CSV_URL);
-    const text = await response.text();
-    const rows = text.trim().split('\n').map(line => line.split(','));
-    const headers = rows[0];
-    const data = rows.slice(1).map(row => {
-      const entry = {};
-      headers.forEach((header, index) => {
-        entry[header.trim()] = row[index]?.trim() || '';
-      });
-      return entry;
-    });
-    renderLeaderboard(data);
-  } catch (err) {
-    console.error('Failed to fetch leaderboard:', err);
-  }
-}
+const text = await response.text();
+const rows = text.trim().split('\n').map(line => line.split(','));
+const headers = rows[0];
+
+// Parse the data
+const data = rows.slice(1).map(row => {
+  const entry = {};
+  headers.forEach((header, index) => {
+    entry[header.trim()] = row[index]?.trim() || '';
+  });
+  return entry;
+});
+
+// Read crowd meter from very first row manually
+const firstRow = rows[1]; // raw CSV second line (row 0 is headers)
+const crowdMeterIndex = headers.indexOf('Crowd Meter Control');
+const meterValue = parseInt(firstRow?.[crowdMeterIndex]) || 0;
+updateCrowdMeter(meterValue);
+
+// Render the board
+renderLeaderboard(data);
 
 function renderLeaderboard(data) {
   const leaderboardBody = document.getElementById('leaderboard-body');
@@ -38,26 +44,29 @@ function renderLeaderboard(data) {
 
   leaderboardBody.innerHTML = '';
 
-  data.forEach(row => {
-    if (!row || typeof row !== 'object') return;
+ data.forEach(row => {
+  if (!row || typeof row !== 'object') return;
 
-    const bandNameRaw = row['Band Name'];
-    const rank = row['Rank'];
-    const score = row['Score'];
+  const bandName = row['Band Name'];
+  const rank = row['Rank'];
+  const score = row['Score'] || '—';
 
-    if (!bandNameRaw || !rank || !score) return;
+  if (!bandName || !rank) return;
 
-    const bandName = bandNameRaw.toString(); // Keep original case
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${rank}</td>
+    <td>${bandName}</td>
+    <td>${score}</td>
+  `;
+  
+  // Highlight PC band
+  if (rank === '--' || bandName.toLowerCase().includes('player')) {
+    tr.classList.add('player-row');
+  }
 
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${rank}</td>
-      <td>${bandName}</td>
-      <td>${score}</td>
-    `;
-    leaderboardBody.appendChild(tr);
-  });
-}
+  leaderboardBody.appendChild(tr);
+});
 
 function updateCrowdMeter(value) {
   const bar = document.getElementById('meter-bar');
