@@ -31,16 +31,21 @@ function renderLeaderboard(data) {
 
   tbody.innerHTML = '';
   data.forEach(row => {
-    const bandName = row['Band Name'] || '';
-    const safeName = bandName.toLowerCase();
-    const row = document.createElement('tr');
-    row.innerHTML = `<td>${rank}</td><td>${name}</td><td>${score}</td>`;
-    if (rank === '--' || name.toLowerCase().includes('player')) {
-      row.classList.add('player-row');
-    }
-    tbody.appendChild(row);
-  });
-}
+  if (!row || !row['Band Name'] || !row['Rank'] || !row['Score']) return;
+
+  const bandName = row['Band Name'].toLowerCase();
+  const rank = row['Rank'];
+  const score = row['Score'];
+
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${rank}</td>
+    <td>${bandName}</td>
+    <td>${score}</td>
+  `;
+  leaderboardBody.appendChild(tr);
+});
+
 
 function updateCrowdMeter(value) {
   const bar = document.getElementById('meter-bar');
