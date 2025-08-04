@@ -5,7 +5,8 @@ function setStyle(styleName) {
   }
 }
 
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVnQpHFVXKj-TesONikDj1kSG-4pNIYymZSPODYqyrMlMBDml8_qVsUrvxTpS5KTL_p6hncoC/pub?output=ods'; // replace with your actual published sheet URL
+// Replace this with your actual published CSV URL
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVnQpHFVXKj-TesONikDj1kSG-4pNIYymZSPODYqyrMlMBDml8_qVsUrvxTpS5KTL_p6hncoC/pub?output=ods';
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchLeaderboardData();
@@ -14,9 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchLeaderboardData() {
   try {
-    const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVnQpHFVXKj-TesONikDj1kSG-4pNIYymZSPODYqyrMlMBDml8_qVsUrvxTpS5KTL_p6hncoC/pub?output=ods');
+    const response = await fetch(SHEET_CSV_URL);
     const text = await response.text();
-    const rows = text.trim().split('\n').map(line => line.split('\t'));
+    const rows = text.trim().split('\n').map(line => line.split(','));
     const headers = rows[0];
     const data = rows.slice(1).map(row => {
       const entry = {};
@@ -46,7 +47,7 @@ function renderLeaderboard(data) {
 
     if (!bandNameRaw || !rank || !score) return;
 
-    const bandName = bandNameRaw.toString().toLowerCase();
+    const bandName = bandNameRaw.toString(); // Keep original case
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
@@ -63,7 +64,5 @@ function updateCrowdMeter(value) {
   if (!bar || isNaN(value)) return;
 
   bar.style.width = `${value}%`;
-  bar.style.backgroundColor = '#f7c948'; // You can change this color if desired
+  bar.style.backgroundColor = '#f7c948';
 }
-
-fetchLeaderboardData();
