@@ -1,16 +1,18 @@
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/YOUR_SHEET_ID_HERE/pub?output=csv';
-
-document.addEventListener('DOMContentLoaded', () => {
-  fetchLeaderboardData();
-  setInterval(fetchLeaderboardData, 10000); // every 10 seconds
-});
-
+// Make setStyle globally available
 function setStyle(styleName) {
   const themeLink = document.getElementById('theme-style');
   if (themeLink) {
     themeLink.setAttribute('href', styleName);
   }
 }
+
+// Pull from Google Sheet
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/YOUR_SHEET_ID_HERE/pub?output=csv';
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetchLeaderboardData();
+  setInterval(fetchLeaderboardData, 10000);
+});
 
 async function fetchLeaderboardData() {
   try {
@@ -44,16 +46,11 @@ function renderLeaderboard(rows) {
 function updateCrowdMeter(value) {
   const crowdVal = parseInt(value);
   const bar = document.getElementById('meter-bar');
-
   if (!bar || isNaN(crowdVal)) return;
 
   bar.style.width = `${crowdVal}%`;
-
-  if (crowdVal < 25) {
-    bar.style.backgroundColor = '#2d9cdb';
-  } else if (crowdVal < 60) {
-    bar.style.backgroundColor = '#f2c94c';
-  } else {
-    bar.style.backgroundColor = '#eb5757';
-  }
+  bar.style.backgroundColor =
+    crowdVal < 25 ? '#2d9cdb' :
+    crowdVal < 60 ? '#f2c94c' :
+    '#eb5757';
 }
