@@ -1,7 +1,13 @@
 function setStyle(styleName) {
-  document.getElementById('stylesheet').setAttribute('href', styleName);
+  const link = document.getElementById('theme-style');
+  if (link) {
+    link.setAttribute('href', styleName);
+    console.log(`Theme switched to: ${styleName}`);
+  }
 }
 
+// ✅ This line makes it globally accessible to your HTML
+window.setStyle = setStyle;
 // Switch theme
 const themeSelector = document.getElementById('themeSelector');
 themeSelector.addEventListener('change', (e) => {
