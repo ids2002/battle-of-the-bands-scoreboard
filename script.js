@@ -14,53 +14,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchLeaderboardData() {
   try {
-    const response = await fetch(SHEET_CSV_URL);
+    const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQs9Mg_QZKXddVdEEXAMPLE/pub?output=tsv');
     const text = await response.text();
-    const rows = text.trim().split('\n').map(row => row.split(','));
-
-    renderLeaderboard(rows.slice(1));
-    updateCrowdMeter(parseInt(rows[0][1]));
+    const rows = text.trim().split('\n').map(line => line.split('\t'));
+    const headers = rows[0];
+    const data = rows.slice(1).map(row => {
+      const entry = {};
+      headers.forEach((header, index) => {
+        entry[header.trim()] = row[index]?.trim() || '';
+      });
+      return entry;
+    });
+    renderLeaderboard(data);
   } catch (err) {
     console.error('Failed to fetch leaderboard:', err);
   }
 }
 
 function renderLeaderboard(data) {
-  const tbody = document.getElementById('leaderboard-body');
-  if (!tbody) return;
+  const leaderboardBody = document.getElementById('leaderboard-body');
+  if (!leaderboardBody) return;
 
-  tbody.innerHTML = '';
-data.forEach(row => {
-  if (!row || typeof row !== 'object') return;
+  leaderboardBody.innerHTML = '';
 
-  const bandNameRaw = row['Band Name'];
-  const rank = row['Rank'];
-  const score = row['Score'];
+  data.forEach(row => {
+    if (!row || typeof row !== 'object') return;
 
-  // Skip rows that don't have all required fields
-  if (!bandNameRaw || !rank || !score) return;
+    const bandNameRaw = row['Band Name'];
+    const rank = row['Rank'];
+    const score = row['Score'];
 
-  const bandName = bandNameRaw.toString().toLowerCase();
+    if (!bandNameRaw || !rank || !score) return;
 
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td>${rank}</td>
-    <td>${bandName}</td>
-    <td>${score}</td>
-  `;
-  leaderboardBody.appendChild(tr);
-});
+    const bandName = bandNameRaw.toString().toLowerCase();
 
-
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${rank}</td>
+      <td>${bandName}</td>
+      <td>${score}</td>
+    `;
+    leaderboardBody.appendChild(tr);
+  });
+}
 
 function updateCrowdMeter(value) {
   const bar = document.getElementById('meter-bar');
   if (!bar || isNaN(value)) return;
 
   bar.style.width = `${value}%`;
-  bar.style.backgroundColor =
-    value < 25 ? '#2d9cdb' :
-    value < 60 ? '#f2c94c' :
-    '#eb5757';
+  bar.style.backgroundColor = '#f7c948'; // You can change this color if desired
 }
 
+fetchLeaderboardData();
