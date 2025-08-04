@@ -26,6 +26,7 @@ async function fetchLeaderboardData() {
 }
 
 function renderLeaderboard(data) {
+  <tbody id="leaderboard-body"></tbody>
   const tbody = document.getElementById('leaderboard-body');
   if (!tbody) return;
 
