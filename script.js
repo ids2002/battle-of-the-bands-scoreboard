@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('btn-neonmetal')?.addEventListener('click', () => {
     document.getElementById('theme-style').setAttribute('href', 'style-neonmetal.css');
-  });
 
 const slider = document.getElementById('crowdSlider');
 const crowdBar = document.getElementById('meter-bar');
@@ -27,6 +26,7 @@ if (slider && crowdBar) {
 
     crowdBar.style.background = color;
   });
+
 }
 
   // Add fake band data
