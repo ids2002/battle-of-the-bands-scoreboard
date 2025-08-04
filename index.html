@@ -16,9 +16,9 @@
 </head>
 <body>
   <div class="theme-toggle">
-    <button onclick="setStyle('style-synthwave.css')">Synthwave</button>
-    <button onclick="setStyle('style-fantasy.css')">Fantasy</button>
-    <button onclick="setStyle('style-neonmetal.css')">Neon Metal</button>
+    <button id="btn-synthwave">Synthwave</button>
+    <button id="btn-fantasy">Fantasy</button>
+    <button id="btn-neonmetal">Neon Metal</button>
   </div>
 
   <div class="scoreboard-container">
@@ -35,3 +35,17 @@
   </div>
 </body>
 </html>
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btn-synthwave').addEventListener('click', () => {
+    setStyle('style-synthwave.css');
+  });
+
+  document.getElementById('btn-fantasy').addEventListener('click', () => {
+    setStyle('style-fantasy.css');
+  });
+
+  document.getElementById('btn-neonmetal').addEventListener('click', () => {
+    setStyle('style-neonmetal.css');
+  });
+});
