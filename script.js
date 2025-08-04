@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchLeaderboardData() {
   try {
-    const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQs9Mg_QZKXddVdEEXAMPLE/pub?output=tsv');
+    const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVnQpHFVXKj-TesONikDj1kSG-4pNIYymZSPODYqyrMlMBDml8_qVsUrvxTpS5KTL_p6hncoC/pub?output=ods');
     const text = await response.text();
     const rows = text.trim().split('\n').map(line => line.split('\t'));
     const headers = rows[0];
