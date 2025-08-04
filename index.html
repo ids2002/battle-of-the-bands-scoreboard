@@ -2,37 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Battle of the Bands Scoreboard</title>
-
-  <!-- Default Synthwave Theme -->
-  <link id="theme-style" rel="stylesheet" href="style-synthwave.css">
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Bebas+Neue&family=Gloock&display=swap" rel="stylesheet">
-
-  <!-- JavaScript -->
-  <script defer src="script.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Battle of the Bands Leaderboard</title>
+  <link id="theme-style" rel="stylesheet" href="style-synthwave.css" />
+  <style>
+    body {
+      font-family: 'Righteous', sans-serif;
+      color: white;
+      background-color: black;
+      text-align: center;
+      padding: 2rem;
+    }
+    .crowd-meter-container {
+      width: 100%;
+      background: #222;
+      height: 30px;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    #meter-bar {
+      height: 100%;
+      width: 0%;
+      transition: width 0.5s, background-color 0.5s;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 0.5rem;
+      border-bottom: 1px solid #444;
+    }
+    .player-row {
+      background-color: #333;
+      font-weight: bold;
+      color: #0ff;
+    }
+    .style-buttons {
+      margin-bottom: 1rem;
+    }
+    .style-buttons button {
+      margin: 0 0.5rem;
+      padding: 0.4rem 1rem;
+    }
+  </style>
 </head>
 <body>
- <div class="theme-toggle">
-  <button id="btn-synthwave">Synthwave</button>
-  <button id="btn-fantasy">Fantasy</button>
-  <button id="btn-neonmetal">Neon Metal</button>
-</div>
 
-  <div class="scoreboard-container">
-    <h1>Battle of the Bands</h1>
-    <div id="crowd-meter">
-      <input type="range" id="crowdSlider" min="0" max="100" value="50">
-      <div id="meter-bar"></div>
-    </div>
-    <table id="leaderboard">
-      <thead>
-        <tr><th>Rank</th><th>Band Name</th><th>Score</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+  <h1>🔥 Battle of the Bands 🔥</h1>
+
+  <div class="style-buttons">
+    <button onclick="setStyle('style-synthwave.css')">Synthwave</button>
+    <button onclick="setStyle('style-metal.css')">Metal</button>
   </div>
+
+  <div class="crowd-meter-container">
+    <div id="meter-bar"></div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Band Name</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody id="leaderboard-body"></tbody>
+  </table>
+
+  <script src="script.js"></script>
 </body>
 </html>
