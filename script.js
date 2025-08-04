@@ -41,6 +41,7 @@ bands.forEach(band => {
   row.innerHTML = `<td>${band.rank}</td><td>${band.name}</td><td>${band.score}</td>`;
   leaderboard.appendChild(row);
 });
+
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-synthwave').addEventListener('click', () => {
     setStyle('style-synthwave.css');
