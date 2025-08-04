@@ -1,3 +1,7 @@
+function setStyle(styleName) {
+  document.getElementById('stylesheet').setAttribute('href', styleName);
+}
+
 // Switch theme
 const themeSelector = document.getElementById('themeSelector');
 themeSelector.addEventListener('change', (e) => {
