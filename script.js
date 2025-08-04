@@ -12,25 +12,22 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('theme-style').setAttribute('href', 'style-neonmetal.css');
   });
 
-  // ⚠️ Commenting this block out for now:
-  /*
-  const slider = document.getElementById('crowdSlider');
-  const crowdBar = document.getElementById('meter-bar');
+const slider = document.getElementById('crowdSlider');
+const crowdBar = document.getElementById('meter-bar');
 
-  if (slider && crowdBar) {
-    slider.addEventListener('input', () => {
-      const value = slider.value;
-      crowdBar.style.width = `${value}%`;
+if (slider && crowdBar) {
+  slider.addEventListener('input', () => {
+    const value = slider.value;
+    crowdBar.style.width = `${value}%`;
 
-      let color = '#00ff66';
-      if (value > 75) color = '#ff0033';
-      else if (value > 50) color = '#ffaa00';
-      else if (value > 25) color = '#00ccff';
+    let color = '#00ff66';
+    if (value > 75) color = '#ff0033';
+    else if (value > 50) color = '#ffaa00';
+    else if (value > 25) color = '#00ccff';
 
-      crowdBar.style.background = color;
-    });
-  }
-  */
+    crowdBar.style.background = color;
+  });
+}
 
   // Add fake band data
   const bands = [
