@@ -1,60 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Battle of the Bands Leaderboard</title>
+  <title>Battle of the Bands</title>
 
-  <!-- Font upgrade -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Bebas+Neue&family=Gloock&display=swap" rel="stylesheet">
-  
-  <!-- Default theme -->
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Bebas+Neue&family=Gloock&display=swap" rel="stylesheet" />
+
+  <!-- Default Theme -->
   <link id="theme-style" rel="stylesheet" href="style-synthwave.css" />
-  
+
+  <!-- JS -->
+  <script defer src="script.js"></script>
+
   <style>
     body {
       font-family: 'Orbitron', sans-serif;
       color: white;
-      background-color: black;
       text-align: center;
       padding: 2rem;
     }
     h1 {
-      font-family: 'Bebas Neue', cursive;
+      font-family: 'Bebas Neue', sans-serif;
       font-size: 3rem;
-    }
-    .crowd-meter-container {
-      width: 100%;
-      background: #222;
-      height: 30px;
-      border-radius: 15px;
-      overflow: hidden;
-      margin-bottom: 2rem;
-    }
-    #meter-bar {
-      height: 100%;
-      width: 0%;
-      transition: width 0.5s, background-color 0.5s;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 0.5rem;
-      border-bottom: 1px solid #444;
-    }
-    .player-row {
-      background-color: #333;
-      font-weight: bold;
-      color: #0ff;
-    }
-    .style-buttons {
       margin-bottom: 1rem;
     }
     .style-buttons button {
       margin: 0 0.5rem;
       padding: 0.4rem 1rem;
     }
+    .crowd-meter-container {
+      width: 80%;
+      margin: 1rem auto;
+      height: 30px;
+      background: #111;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    #meter-bar {
+      height: 100%;
+      width: 50%;
+      background-color: #f2c94c;
+      transition: width 0.4s ease, background-color 0.4s ease;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+    }
+    th, td {
+      padding: 0.5rem;
+      border-bottom: 1px solid #444;
+    }
+    .player-row {
+      font-weight: bold;
+      color: #00ffff;
+    }
   </style>
-
-  <script defer src="script.js"></script>
 </head>
+<body>
+  <h1>🔥 Battle of the Bands 🔥</h1>
+
+  <div class="style-buttons">
+    <button onclick="setStyle('style-synthwave.css')">Synthwave</button>
+    <button onclick="setStyle('style-metal.css')">Metal</button>
+    <button onclick="setStyle('style-fantasy.css')">Fantasy</button>
+  </div>
+
+  <div class="crowd-meter-container">
+    <div id="meter-bar"></div>
+  </div>
+
+  <table id="leaderboard">
+    <thead>
+      <tr><th>Rank</th><th>Band Name</th><th>Score</th></tr>
+    </thead>
+    <tbody id="leaderboard-body"></tbody>
+  </table>
+</body>
+</html>
