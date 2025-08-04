@@ -30,12 +30,16 @@ function renderLeaderboard(data) {
   if (!tbody) return;
 
   tbody.innerHTML = '';
-  data.forEach(row => {
-  if (!row || !row['Band Name'] || !row['Rank'] || !row['Score']) return;
+data.forEach(row => {
+  if (!row || typeof row !== 'object') return;
 
-  const bandName = row['Band Name'].toLowerCase();
+  const bandNameRaw = row['Band Name'];
   const rank = row['Rank'];
   const score = row['Score'];
+
+  if (!bandNameRaw || !rank || !score) return;
+
+  const bandName = bandNameRaw.toString().toLowerCase();
 
   const tr = document.createElement('tr');
   tr.innerHTML = `
