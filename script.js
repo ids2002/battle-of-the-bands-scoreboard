@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-neonmetal')?.addEventListener('click', () => {
     document.getElementById('theme-style').setAttribute('href', 'style-neonmetal.css');
 
-
 }
 
   // Add fake band data
