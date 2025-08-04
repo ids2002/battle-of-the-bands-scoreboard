@@ -1,17 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Battle of the Bands Leaderboard</title>
+
+  <!-- Font upgrade -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Bebas+Neue&family=Gloock&display=swap" rel="stylesheet">
+  
+  <!-- Default theme -->
   <link id="theme-style" rel="stylesheet" href="style-synthwave.css" />
+  
   <style>
     body {
-      font-family: 'Righteous', sans-serif;
+      font-family: 'Orbitron', sans-serif;
       color: white;
       background-color: black;
       text-align: center;
       padding: 2rem;
+    }
+    h1 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 3rem;
     }
     .crowd-meter-container {
       width: 100%;
@@ -47,31 +55,6 @@
       padding: 0.4rem 1rem;
     }
   </style>
+
+  <script defer src="script.js"></script>
 </head>
-<body>
-
-  <h1>🔥 Battle of the Bands 🔥</h1>
-
-  <div class="style-buttons">
-    <button onclick="setStyle('style-synthwave.css')">Synthwave</button>
-    <button onclick="setStyle('style-metal.css')">Metal</button>
-  </div>
-
-  <div class="crowd-meter-container">
-    <div id="meter-bar"></div>
-  </div>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Band Name</th>
-        <th>Score</th>
-      </tr>
-    </thead>
-    <tbody id="leaderboard-body"></tbody>
-  </table>
-
-  <script src="script.js"></script>
-</body>
-</html>
