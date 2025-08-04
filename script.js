@@ -64,5 +64,10 @@ function updateCrowdMeter(value) {
   if (!bar || isNaN(value)) return;
 
   bar.style.width = `${value}%`;
-  bar.style.backgroundColor = '#f7c948';
+
+  bar.style.backgroundColor =
+    value < 25 ? '#2d9cdb' :
+    value < 60 ? '#f2c94c' :
+    '#eb5757';
 }
+
