@@ -1,0 +1,78 @@
+body {
+  background: #0e0e0e;
+  font-family: 'Bebas Neue', sans-serif;
+  color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+  text-shadow: 1px 1px 3px #000;
+}
+
+.container {
+  padding: 2rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 3.5rem;
+  color: #ff3c00;
+  text-shadow: 0 0 10px #ff3c00, 0 0 20px #c90076;
+  margin-bottom: 1.5rem;
+}
+
+.theme-toggle {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #f8f8f8;
+}
+
+.crowd-meter label {
+  font-size: 1.2rem;
+  color: #f8f8f8;
+}
+
+#crowdSlider {
+  width: 60%;
+  margin: 1rem auto;
+}
+
+#crowdBar {
+  height: 20px;
+  background: linear-gradient(to right, #ff3c00, #9c00ff);
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  transition: width 0.3s ease;
+}
+
+table.leaderboard {
+  width: 80%;
+  margin: auto;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #9c00ff;
+}
+
+.leaderboard th, .leaderboard td {
+  padding: 1rem;
+  border-bottom: 1px solid #9c00ff;
+}
+
+.leaderboard th {
+  background-color: #1e1e1e;
+  color: #f8f8f8;
+  font-size: 1.1rem;
+}
+
+.leaderboard td {
+  font-size: 1rem;
+  color: #ffdedc;
+}
+
+select {
+  background-color: #1e1e1e;
+  color: #fff;
+  border: 1px solid #ff3c00;
+  padding: 0.5rem;
+  font-family: 'Bebas Neue', sans-serif;
+  border-radius: 5px;
+  outline: none;
+}
