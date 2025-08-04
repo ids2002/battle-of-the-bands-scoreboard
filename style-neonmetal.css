@@ -76,3 +76,23 @@ select {
   border-radius: 5px;
   outline: none;
 }
+
+#crowd-meter {
+  margin: 20px 0;
+  text-align: center;
+}
+
+#crowdSlider {
+  width: 60%;
+  margin-bottom: 10px;
+}
+
+#meter-bar {
+  height: 20px;
+  width: 50%;
+  background-color: #00ff66;
+  margin: 0 auto;
+  border-radius: 10px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
