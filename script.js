@@ -37,6 +37,7 @@ data.forEach(row => {
   const rank = row['Rank'];
   const score = row['Score'];
 
+  // Skip rows that don't have all required fields
   if (!bandNameRaw || !rank || !score) return;
 
   const bandName = bandNameRaw.toString().toLowerCase();
@@ -49,6 +50,7 @@ data.forEach(row => {
   `;
   leaderboardBody.appendChild(tr);
 });
+
 
 
 function updateCrowdMeter(value) {
