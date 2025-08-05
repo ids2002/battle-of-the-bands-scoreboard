@@ -105,7 +105,6 @@ select {
   transition: width 0.5s ease-in-out, background-color 0.3s;
 }
 
-
 #meter-bar {
   height: 20px;
   width: 50%;
