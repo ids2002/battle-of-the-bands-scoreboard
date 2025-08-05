@@ -10,7 +10,7 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVn
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchLeaderboardData();
-  setInterval(fetchLeaderboardData, 10000); // Auto-refresh every 10 seconds
+  setInterval(fetchLeaderboardData, 5000); // Auto-refresh every 5 seconds
 });
 
 async function fetchLeaderboardData() {
