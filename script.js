@@ -18,13 +18,10 @@ function fetchLeaderboardData() {
     .then(response => response.text())
     .then(csvText => {
       const rawData = parseCSV(csvText);
-      
-      // ✅ Declare this BEFORE using it
       const rawFirstRow = rawData[0];
 
       if (!rawFirstRow) throw new Error("No data found.");
 
-      // ✅ Now it's safe to access it
       const crowdValue = parseInt(rawFirstRow['Crowd Level'], 10);
       updateCrowdMeter(crowdValue);
 
