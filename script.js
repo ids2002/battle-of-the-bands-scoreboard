@@ -1,17 +1,58 @@
-function setStyle(styleName) {
-  const themeLink = document.getElementById('theme-style');
-  if (themeLink) {
-    themeLink.setAttribute('href', styleName);
-  }
+const LEADERBOARD_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVnQpHFVXKj-TesONikDj1kSG-4pNIYymZSPODYqyrMlMBDml8_qVsUrvxTpS5KTL_p6hncoC/pub?gid=946014061&single=true&output=csv';
+
+function parseCSV(csvText) {
+  const lines = csvText.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim());
+  const rows = lines.slice(1);
+
+  return rows.map(line => {
+    const values = line.split(',').map(v => v.trim());
+    const obj = {};
+    headers.forEach((header, index) => {
+      obj[header] = values[index];
+    });
+    return obj;
+  });
 }
 
-// ✅ Replace with your actual published CSV URL
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVnQpHFVXKj-TesONikDj1kSG-4pNIYymZSPODYqyrMlMBDml8_qVsUrvxTpS5KTL_p6hncoC/pub?gid=946014061&single=true&output=csv';
+function renderLeaderboard(data) {
+  const tbody = document.querySelector('#leaderboard tbody');
+  if (!tbody) return;
 
-document.addEventListener('DOMContentLoaded', () => {
-  fetchLeaderboardData();
-  setInterval(fetchLeaderboardData, 5000); // Auto-refresh every 5 seconds
-});
+  tbody.innerHTML = '';
+
+  data.forEach(row => {
+    const bandName = row['Band Name']?.toLowerCase();
+    const rank = row['Rank'];
+    const score = row['Score'];
+
+    if (!bandName || !rank || !score) return;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${rank}</td>
+      <td>${row['Band Name']}</td>
+      <td>${score}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function updateCrowdMeter(value) {
+  const bar = document.getElementById('meter-bar');
+  if (!bar || isNaN(value)) return;
+
+  const percent = Math.max(0, Math.min(100, value));
+  bar.style.width = `${percent}%`;
+
+  if (percent < 40) {
+    bar.style.backgroundColor = '#f44336'; // red
+  } else if (percent < 70) {
+    bar.style.backgroundColor = '#ffc107'; // yellow
+  } else {
+    bar.style.backgroundColor = '#4caf50'; // green
+  }
+}
 
 function fetchLeaderboardData() {
   fetch(LEADERBOARD_URL)
@@ -33,65 +74,18 @@ function fetchLeaderboardData() {
     });
 }
 
-    // ✅ Pull Crowd Meter Control from first row directly
-    const rawFirstRow = rows[1];
-    const meterIndex = headers.indexOf('Crowd Meter Control');
-    const crowdValue = parseInt(rawFirstRow?.[meterIndex]) || 0;
-    updateCrowdMeter(crowdValue);
-
-    renderLeaderboard(data);
-    .catch(err => {
-    console.error('Failed to fetch leaderboard:', err);
-    });
+function setStyle(cssFile) {
+  const link = document.getElementById('theme-style');
+  if (link) link.setAttribute('href', cssFile);
 }
 
-function renderLeaderboard(data) {
-  const leaderboardBody = document.getElementById('leaderboard-body');
-  if (!leaderboardBody) return;
+document.getElementById('btn-synthwave')?.addEventListener('click', () => setStyle('style-synthwave.css'));
+document.getElementById('btn-fantasy')?.addEventListener('click', () => setStyle('style-fantasy.css'));
+document.getElementById('btn-neonmetal')?.addEventListener('click', () => setStyle('style-metal.css'));
+document.getElementById('btn-refresh')?.addEventListener('click', fetchLeaderboardData);
 
-  leaderboardBody.innerHTML = '';
+// Auto-refresh every 30 seconds
+setInterval(fetchLeaderboardData, 30000);
 
-  data.forEach(row => {
-    if (!row || typeof row !== 'object') return;
-
-    const bandName = row['Band Name'];
-    const rank = row['Rank'];
-    const score = row['Score'] || '—';
-
-    if (!bandName || !rank) return;
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${rank}</td>
-      <td>${bandName}</td>
-      <td>${score}</td>
-    `;
-
-    if (rank === '--' || bandName.toLowerCase().includes('player')) {
-      tr.classList.add('player-row');
-    }
-
-    leaderboardBody.appendChild(tr);
-  });
-}
-
-function updateCrowdMeter(value) {
-  const bar = document.getElementById('meter-bar');
-  const readout = document.getElementById('meter-readout');
-
-  if (!bar || isNaN(value)) {
-    console.log("Meter bar not updated. Value:", value);
-    return;
-  }
-
-  // Display the value
-  readout.textContent = `Meter: ${value}%`;
-
-  // Force update width + color
-  bar.style.width = `${value}%`;
-  bar.style.backgroundColor =
-    value < 25 ? '#2d9cdb' :
-    value < 60 ? '#f2c94c' :
-    '#eb5757';
-}
-
+// Initial load
+fetchLeaderboardData();
