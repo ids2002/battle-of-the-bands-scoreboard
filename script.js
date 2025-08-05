@@ -22,7 +22,7 @@ function renderLeaderboard(data) {
   tbody.innerHTML = '';
 
   data.forEach(row => {
-    const bandName = row['Band Name']?.toLowerCase();
+    const bandName = row['Band Name']?.trim();
     const rank = row['Rank'];
     const score = row['Score'];
 
@@ -31,9 +31,14 @@ function renderLeaderboard(data) {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${rank}</td>
-      <td>${row['Band Name']}</td>
+      <td>${bandName}</td>
       <td>${score}</td>
     `;
+
+    if (bandName.toLowerCase() === 'player party') {
+      tr.classList.add('player-highlight');
+    }
+
     tbody.appendChild(tr);
   });
 }
