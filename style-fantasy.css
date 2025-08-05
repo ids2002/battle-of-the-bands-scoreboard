@@ -76,14 +76,6 @@ select {
   outline: none;
 }
 
-#crowd-meter {
-  margin: 20px 0;
-  text-align: center;
-}
-
-#crowdSlider {
-  width: 60%;
-  margin-bottom: 10px;
 }
 .crowd-meter-container {
   width: 100%;
@@ -101,14 +93,4 @@ select {
   width: 0%;
   background-color: #2d9cdb; /* default blue */
   transition: width 0.5s ease-in-out, background-color 0.3s;
-}
-
-
-#meter-bar {
-  height: 20px;
-  width: 50%;
-  background-color: #00ff66;
-  margin: 0 auto;
-  border-radius: 10px;
-  transition: width 0.3s ease, background-color 0.3s ease;
 }
