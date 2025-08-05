@@ -13,24 +13,27 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(fetchLeaderboardData, 5000); // Auto-refresh every 5 seconds
 });
 
-async function fetchLeaderboardData() {
-  try {
-    const response = await fetch(SHEET_CSV_URL);
-    const text = await response.text();
+function fetchLeaderboardData() {
+  fetch(LEADERBOARD_URL)
+    .then(response => response.text())
+    .then(csvText => {
+      const rawData = parseCSV(csvText);
+      const rawFirstRow = rawData[0];
 
-    const rows = text.trim().split('\n').map(line => line.split(','));
-    const headers = rows[0];
+      if (!rawFirstRow) throw new Error("No data found.");
 
-    // Parse the leaderboard data
-    const data = rows.slice(1).map(row => {
-      const entry = {};
-      headers.forEach((header, index) => {
-        entry[header.trim()] = row[index]?.trim() || '';
-      });
-      return entry;
+      // Crowd meter value from sheet
+      const crowdValue = parseInt(rawFirstRow['Crowd Level'], 10);
+      updateCrowdMeter(crowdValue);
+
+      // Remove header or blank rows
+      const data = rawData.filter(row => row['Band Name'] && row['Rank'] && row['Score']);
+      renderLeaderboard(data);
+    })
+    .catch(err => {
+      console.error("Failed to fetch leaderboard:", err);
     });
-    console.log("Raw meter value from sheet row:", rawFirstRow?.[meterIndex]);
-    console.log("Parsed meter value:", crowdValue);
+}
 
     // ✅ Pull Crowd Meter Control from first row directly
     const rawFirstRow = rows[1];
