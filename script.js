@@ -74,11 +74,21 @@ function renderLeaderboard(data) {
 
 function updateCrowdMeter(value) {
   const bar = document.getElementById('meter-bar');
-  if (!bar || isNaN(value)) return;
+  const readout = document.getElementById('meter-readout');
 
+  if (!bar || isNaN(value)) {
+    console.log("Meter bar not updated. Value:", value);
+    return;
+  }
+
+  // Display the value
+  readout.textContent = `Meter: ${value}%`;
+
+  // Force update width + color
   bar.style.width = `${value}%`;
   bar.style.backgroundColor =
     value < 25 ? '#2d9cdb' :
     value < 60 ? '#f2c94c' :
     '#eb5757';
 }
+
