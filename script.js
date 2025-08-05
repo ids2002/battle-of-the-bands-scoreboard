@@ -40,7 +40,7 @@ function fetchLeaderboardData() {
     updateCrowdMeter(crowdValue);
 
     renderLeaderboard(data);
-    catch (err) {
+    .catch(err => {
     console.error('Failed to fetch leaderboard:', err);
     });
 }
