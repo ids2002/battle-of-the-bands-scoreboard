@@ -18,20 +18,21 @@ function fetchLeaderboardData() {
     .then(response => response.text())
     .then(csvText => {
       const rawData = parseCSV(csvText);
+      
+      // ✅ Declare this BEFORE using it
       const rawFirstRow = rawData[0];
 
       if (!rawFirstRow) throw new Error("No data found.");
 
-      // Crowd meter value from sheet
+      // ✅ Now it's safe to access it
       const crowdValue = parseInt(rawFirstRow['Crowd Level'], 10);
       updateCrowdMeter(crowdValue);
 
-      // Remove header or blank rows
       const data = rawData.filter(row => row['Band Name'] && row['Rank'] && row['Score']);
       renderLeaderboard(data);
     })
     .catch(err => {
-      console.error("Failed to fetch leaderboard:", err);
+      console.error("❌ Failed to fetch leaderboard:", err);
     });
 }
 
