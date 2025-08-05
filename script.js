@@ -29,6 +29,8 @@ async function fetchLeaderboardData() {
       });
       return entry;
     });
+    console.log("Raw meter value from sheet row:", rawFirstRow?.[meterIndex]);
+    console.log("Parsed meter value:", crowdValue);
 
     // ✅ Pull Crowd Meter Control from first row directly
     const rawFirstRow = rows[1];
