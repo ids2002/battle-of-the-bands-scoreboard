@@ -28,6 +28,13 @@ function renderLeaderboard(data) {
 
     if (!bandName || !rank || !score) return;
 
+  // Apply highlight styling if this is the player band
+  const isPlayerBand = rank === '--' || bandName.toLowerCase().includes('player') || index === 0;
+  if (isPlayerBand) {
+  tr.classList.add('player-highlight');
+}
+
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${rank}</td>
