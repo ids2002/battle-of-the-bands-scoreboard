@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Battle of the Bands</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Bebas+Neue&family=Gloock&display=swap" rel="stylesheet" />
+
+  <!-- Default Theme -->
+  <link id="theme-style" rel="stylesheet" href="style-synthwave.css" />
+
+  <!-- JS -->
+  <script defer src="script.js"></script>
+
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .style-buttons button {
+      margin: 0 0.5rem;
+      padding: 0.4rem 1rem;
+    }
+    .crowd-meter-container {
+      width: 80%;
+      margin: 1rem auto;
+      height: 30px;
+      background: #111;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    #meter-bar {
+      height: 100%;
+      width: 50%;
+      background-color: #f2c94c;
+      transition: width 0.4s ease, background-color 0.4s ease;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+    }
+    th, td {
+      padding: 0.5rem;
+      border-bottom: 1px solid #444;
+    }
+    .player-row {
+      font-weight: bold;
+      color: #00ffff;
+    }
+  </style>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+  <h1>🔥 Battle of the Bands 🔥</h1>
+  
+<link id="theme-style" rel="stylesheet" href="style-synthwave.css">
+
+<button id="btn-refresh">Manual Refresh</button>
+
+<div id="crowd-meter">
+  <div id="meter-bar"></div>
+</div>
+
+  <div class="crowd-meter-container">
+    <div id="meter-bar"></div>
+    <p id="meter-readout" style="margin-top: 0.5rem; font-weight: bold;">Meter: ?%</p>
+  </div>
+
+<table id="leaderboard"></table>
+  <thead>
+    <tr><th>Rank</th><th>Band Name</th><th>Score</th></tr>
+  </thead>
+  <tbody></tbody>
+</table>
+</body>
+</html>
