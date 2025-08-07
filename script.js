@@ -1,5 +1,12 @@
 const LEADERBOARD_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVnQpHFVXKj-TesONikDj1kSG-4pNIYymZSPODYqyrMlMBDml8_qVsUrvxTpS5KTL_p6hncoC/pub?gid=946014061&single=true&output=csv';
 
+function updateCrowdMeter(value) {
+  const bar = document.getElementById('crowd-meter');
+  if (!bar || isNaN(value)) return;
+
+  const clamped = Math.min(Math.max(value, 0), 100);
+  bar.style.width = `${clamped}%`;
+
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-refresh").addEventListener("click", fetchLeaderboardData);
     fetchLeaderboardData();
@@ -67,13 +74,5 @@ function renderLeaderboard(data) {
       row.style.fontWeight = "bold";
     }
   });
-}
-
-function updateCrowdMeter(value) {
-  const bar = document.getElementById('crowd-meter');
-  if (!bar || isNaN(value)) return;
-
-  const clamped = Math.min(Math.max(value, 0), 100);
-  bar.style.width = `${clamped}%`;
 }
 
