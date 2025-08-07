@@ -91,6 +91,7 @@ select {
   height: 100%;
   width: 0%;
   transition: width 0.4s ease;
+  outline: 1px solid red;
 }
 
 .player-highlight {
