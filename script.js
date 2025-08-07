@@ -1,5 +1,5 @@
 
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVnQpHFVXKj-TesONikDj1kSG-4pNIYymZSPODYqyrMlMBDml8_qVsUrvxTpS5KTL_p6hncoC/pub?gid=946014061&single=true&output=csv";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVnQpHFVXKj-TesONikDj1kSG-4pNIYymZSPODYqyrMlMBDml8_qVsUrvxTpS5KTL_p6hncoC/pubhtml?gid=946014061&single=true";
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-refresh").addEventListener("click", fetchLeaderboardData);
