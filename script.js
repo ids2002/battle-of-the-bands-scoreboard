@@ -21,10 +21,10 @@ function renderLeaderboard(data) {
 
   tbody.innerHTML = '';
 
-  data.forEach(row => {
+  data.forEach((row, index) => {
     const bandName = row['Band Name']?.trim();
-    const rank = row['Rank'];
-    const score = row['Score'];
+    const rank = row['Rank']?.trim();
+    const score = row['Score']?.trim();
 
     if (!bandName || !rank || !score) return;
 
@@ -35,7 +35,13 @@ function renderLeaderboard(data) {
       <td>${score}</td>
     `;
 
-    if (bandName.toLowerCase() === 'player party') {
+    // ✅ Highlight if it's the player band (rank "--", or index 0, or has a known name)
+    if (
+      rank === '--' ||
+      index === 0 ||
+      bandName.toLowerCase().includes('player')
+    ) {
+      console.log("🎯 Highlighting PC band row:", bandName);
       tr.classList.add('player-highlight');
     }
 
