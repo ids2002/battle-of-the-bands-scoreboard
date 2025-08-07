@@ -73,12 +73,3 @@ function updateCrowdMeter(value) {
     const clamped = Math.min(Math.max(value, 0), 100);
     bar.style.width = `${clamped}%`;
 }
-
-async function initialize() {
-  try {
-    await fetchLeaderboardData();
-  } catch (err) {
-    console.error('Initialization failed:', err);
-  }
-}
-initialize();
