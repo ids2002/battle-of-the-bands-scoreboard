@@ -21,44 +21,35 @@ function renderLeaderboard(data) {
 
   tbody.innerHTML = '';
 
-  data.forEach((row, index) => {
-  if (!row || !row['Band Name'] || !row['Rank'] || !row['Score']) return;
+data.forEach((row, index) => {
+    if (!row || !row['Band Name'] || !row['Rank'] || !row['Score']) return;
 
-  const bandName = row['Band Name'];
-  const rank = row['Rank'];
-  const score = row['Score'];
+    const bandName = row['Band Name'];
+    const rank = row['Rank'];
+    const score = row['Score'];
 
-  const tr = document.createElement('tr'); // Declare tr FIRST
+    const tr = document.createElement('tr');
 
-  tr.innerHTML = `
-    <td>${rank}</td>
-    <td>${bandName}</td>
-    <td>${score}</td>
-  `;
+    // Highlight second row (index === 1)
+    if (index === 1) {
+        tr.classList.add('highlight-player');
+    }
 
-  // Highlight the second row (player band)
-  if (index === 1) {
-    tr.classList.add('player-highlight');
-  }
+    tr.innerHTML = `
+        <td>${rank}</td>
+        <td>${bandName}</td>
+        <td>${score}</td>
+    `;
 
-  leaderboardBody.appendChild(tr);
+    leaderboardBody.appendChild(tr);
 });
 
 
 function updateCrowdMeter(value) {
-  const bar = document.getElementById('meter-bar');
-  if (!bar || isNaN(value)) return;
-
-  const percent = Math.max(0, Math.min(100, value));
-  bar.style.width = `${percent}%`;
-
-  if (percent < 40) {
-    bar.style.backgroundColor = '#f44336'; // red
-  } else if (percent < 70) {
-    bar.style.backgroundColor = '#ffc107'; // yellow
-  } else {
-    bar.style.backgroundColor = '#4caf50'; // green
-  }
+    const bar = document.getElementById('meter-bar');
+    if (!bar || isNaN(value)) return;
+    const clamped = Math.min(Math.max(value, 0), 100);
+    bar.style.width = `${clamped}%`;
 }
 
 function fetchLeaderboardData() {
