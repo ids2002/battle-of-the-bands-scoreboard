@@ -28,20 +28,22 @@ function renderLeaderboard(data) {
   const rank = row['Rank'];
   const score = row['Score'];
 
-  const tr = document.createElement('tr');
+  const tr = document.createElement('tr'); // Declare tr FIRST
+
   tr.innerHTML = `
     <td>${rank}</td>
     <td>${bandName}</td>
     <td>${score}</td>
   `;
 
-  // Highlight the player band (always 2nd row: index === 1)
+  // Highlight the second row (player band)
   if (index === 1) {
     tr.classList.add('player-highlight');
   }
 
   leaderboardBody.appendChild(tr);
 });
+
 
 function updateCrowdMeter(value) {
   const bar = document.getElementById('meter-bar');
