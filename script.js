@@ -42,31 +42,31 @@ async function fetchLeaderboardData() {
 }
 
 
-function renderLeaderboard(data, playerName) {
-    const tbody = document.getElementById("leaderboard-body");
-    if (!tbody) return;
+function renderLeaderboard(data) {
+  const table = document.getElementById("leaderboard");
+  table.innerHTML = "";
 
-    tbody.innerHTML = "";
+  // Add header row
+  const header = table.insertRow();
+  ["Rank", "Band Name", "Score"].forEach(text => {
+    const cell = header.insertCell();
+    cell.textContent = text;
+    cell.style.fontWeight = "bold";
+  });
 
-    data.forEach((row, index) => {
-        if (!row || !row["Band Name"] || !row["Rank"] || !row["Score"]) return;
+  // Add band rows
+  data.forEach((band, index) => {
+    const row = table.insertRow();
+    row.insertCell().textContent = band.Rank || index;       // Rank
+    row.insertCell().textContent = band["Band Name"];         // Band Name
+    row.insertCell().textContent = band.Score;                // Score
 
-        const bandName = row["Band Name"];
-        const rank = row["Rank"];
-        const score = row["Score"];
-
-        const tr = document.createElement("tr");
-        if (bandName === playerName) {
-            tr.classList.add("highlight-player");
-        }
-
-        tr.innerHTML = `
-            <td>${rank}</td>
-            <td>${bandName}</td>
-            <td>${score}</td>
-        `;
-        tbody.appendChild(tr);
-    });
+    // Highlight the first data row (player band)
+    if (index === 0) {
+      row.style.backgroundColor = "#ffcc00";   // Customize as needed
+      row.style.fontWeight = "bold";
+    }
+  });
 }
 
 function updateCrowdMeter(value) {
