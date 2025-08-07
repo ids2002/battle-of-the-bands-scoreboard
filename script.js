@@ -15,30 +15,23 @@ function setStyle(styleName) {
 }
 
 async function fetchLeaderboardData() {
-    try {
-        const response = await fetch(SHEET_URL);
-        const csvText = await response.text();
-        const rows = csvText.trim().split("\n").map(row => row.split(","));
-        const headers = rows[0];
-        const data = rows.slice(1).map(row => {
-            const entry = {};
-            headers.forEach((header, i) => {
-                entry[header.trim()] = row[i] ? row[i].trim() : "";
-            });
-            return entry;
-        });
+  try {
+    const response = await fetch(LEADERBOARD_CSV_URL);
+    const csvText = await response.text();
+    const data = Papa.parse(csvText, {
+      header: true,
+      skipEmptyLines: true
+    }).data;
 
-        const rawFirstRow = data[0];
-        const crowdValue = parseInt(rawFirstRow["Crowd Meter"] || "0", 10);
-        const playerName = rawFirstRow["Player Band"] || "";
+    console.log(data); // <--- Add this
 
-        updateCrowdMeter(crowdValue);
-        renderLeaderboard(data.slice(1), playerName);
-
-    } catch (err) {
-        console.error("Failed to fetch leaderboard:", err);
-    }
+    renderLeaderboard(data);
+    updateCrowdMeterFromData(data);
+  } catch (err) {
+    console.error('Failed to fetch leaderboard:', err);
+  }
 }
+
 
 function renderLeaderboard(data, playerName) {
     const tbody = document.getElementById("leaderboard-body");
