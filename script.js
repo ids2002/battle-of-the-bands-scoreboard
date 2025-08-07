@@ -22,39 +22,26 @@ function renderLeaderboard(data) {
   tbody.innerHTML = '';
 
   data.forEach((row, index) => {
-    const bandName = row['Band Name']?.trim();
-    const rank = row['Rank']?.trim();
-    const score = row['Score']?.trim();
+  if (!row || !row['Band Name'] || !row['Rank'] || !row['Score']) return;
 
-    if (!bandName || !rank || !score) return;
+  const bandName = row['Band Name'];
+  const rank = row['Rank'];
+  const score = row['Score'];
 
-  // Apply highlight styling if this is the player band
-  const isPlayerBand = rank === '--' || bandName.toLowerCase().includes('player') || index === 0;
-  if (isPlayerBand) {
-  tr.classList.add('player-highlight');
-}
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${rank}</td>
+    <td>${bandName}</td>
+    <td>${score}</td>
+  `;
 
+  // Highlight the player band (always 2nd row: index === 1)
+  if (index === 1) {
+    tr.classList.add('player-highlight');
+  }
 
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${rank}</td>
-      <td>${bandName}</td>
-      <td>${score}</td>
-    `;
-
-    // ✅ Highlight if it's the player band (rank "--", or index 0, or has a known name)
-    if (
-      rank === '--' ||
-      index === 0 ||
-      bandName.toLowerCase().includes('player')
-    ) {
-      console.log("🎯 Highlighting PC band row:", bandName);
-      tr.classList.add('player-highlight');
-    }
-
-    tbody.appendChild(tr);
-  });
-}
+  leaderboardBody.appendChild(tr);
+});
 
 function updateCrowdMeter(value) {
   const bar = document.getElementById('meter-bar');
