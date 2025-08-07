@@ -73,3 +73,5 @@ function updateCrowdMeter(value) {
     const clamped = Math.min(Math.max(value, 0), 100);
     bar.style.width = `${clamped}%`;
 }
+
+initialize();
