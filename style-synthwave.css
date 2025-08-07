@@ -77,21 +77,20 @@ select {
 }
 
 .crowd-meter-container {
-  width: 100%;
-  max-width: 600px;
+  background-color: #111;
+  border-radius: 10px;
   height: 25px;
-  background-color: #333;
-  border: 2px solid #999;
-  border-radius: 4px;
+  width: 50%;
   margin: 20px auto;
   overflow: hidden;
+  border: 2px solid #444;
 }
 
-#meter-bar {
+#crowd-meter {
+  background-color: #ffcc00;
   height: 100%;
-  width: 0%;
-  background-color: #2d9cdb; /* default blue */
-  transition: width 0.5s ease-in-out, background-color 0.3s;
+  width: 0%; /* Will be set dynamically */
+  transition: width 0.5s ease;
 }
 
 .player-highlight {
