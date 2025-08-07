@@ -81,5 +81,4 @@ async function initialize() {
     console.error('Initialization failed:', err);
   }
 }
-
 initialize();
