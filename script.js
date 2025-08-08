@@ -114,9 +114,9 @@ function setupRefresh() {
   if (button) {
     button.addEventListener('click', fetchLeaderboardData);
   }
-
-  // Optional: auto-refresh every 10 seconds
-  setInterval(fetchLeaderboardData, 60000);
+  
+const REFRESH_INTERVAL = 60000; // 1 minute
+setInterval(fetchLeaderboardData, REFRESH_INTERVAL);
 }
 
 // Initial setup
