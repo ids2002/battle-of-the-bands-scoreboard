@@ -28,23 +28,23 @@ function updateCrowdMeterFromData(data) {
   }
 }
 
-async function fetchLeaderboardData() {
-  try {
-    const response = await fetch(LEADERBOARD_CSV_URL);
-    const csvText = await response.text();
-    const data = Papa.parse(csvText, {
-      header: true,
-      skipEmptyLines: true
-    }).data;
+function fetchLeaderboardData() {
+  fetch(LEADERBOARD_CSV_URL)
+    .then(response => response.text())
+    .then(csvText => {
+      const data = Papa.parse(csvText, {
+        header: false,
+        skipEmptyLines: true,
+      }).data;
 
-    console.log(data); // <--- Add this
-
-    renderLeaderboard(data);
-    updateCrowdMeterFromData(data);
-  } catch (err) {
-    console.error('Failed to fetch leaderboard:', err);
-  }
+      renderLeaderboard(data);
+      updateCrowdMeterFromData(data);  // ✅ Here’s where it’s used
+    })
+    .catch(error => {
+      console.error("Failed to fetch leaderboard:", error);
+    });
 }
+
 
 function renderLeaderboard(data) {
   const table = document.getElementById("leaderboard");
