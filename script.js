@@ -70,12 +70,19 @@ function renderLeaderboard(data) {
 }
 
 // Update the crowd meter based on a value from 0–100
-function updateCrowdMeter(value) {
-  const bar = document.getElementById('crowd-meter');
-  if (!bar || isNaN(value)) return;
+function updateCrowdMeterFromData(data) {
+  if (!data || data.length < 2) return;
 
-  const clamped = Math.min(Math.max(value, 0), 100);
-  bar.style.width = `${clamped}%`;
+  const playerRow = data[1];
+  const rawValue = playerRow[3];
+
+  if (!rawValue || isNaN(rawValue)) {
+    console.warn("Invalid crowd meter value:", rawValue);
+    return;
+  }
+
+  const crowdValue = parseFloat(rawValue);
+  updateCrowdMeter(crowdValue);
 }
 
 // Read the crowd value from the 4th column of the 2nd row
