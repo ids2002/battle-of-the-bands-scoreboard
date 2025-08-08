@@ -80,6 +80,13 @@ function updateCrowdMeter(value) {
     bar.style.background = 'linear-gradient(to right, #ff3300, #cc0000)';
     bar.classList.add('pulse'); // Glowing at high energy
   }
+    const critical = document.getElementById("crowd-critical");
+if (clamped >= 90) {
+  critical.classList.remove("hidden");
+} else {
+  critical.classList.add("hidden");
+}
+
 }
     }
   });
