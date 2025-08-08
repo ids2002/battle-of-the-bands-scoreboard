@@ -71,3 +71,9 @@ select {
   background: #f9c449;
   transition: width 0.4s ease;
 }
+
+.highlight {
+  background-color: #ffcc00;
+  color: #000;
+  font-weight: bold;
+}
