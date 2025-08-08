@@ -6,6 +6,18 @@ papaScript.src = 'https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js'
 papaScript.onload = initialize;
 document.head.appendChild(papaScript);
 
+function updateCrowdMeter(value) {
+  const bar = document.getElementById("crowd-meter");
+  if (!bar || isNaN(value)) {
+    console.warn("Invalid crowd meter value:", value);
+    return;
+}
+
+  const clamped = Math.min(Math.max(parseFloat(value), 0), 100);
+  bar.style.width = `${clamped}%`;
+}
+
+
 // Load default theme
 function setDefaultTheme() {
   const themeEl = document.getElementById('theme-style');
@@ -109,13 +121,6 @@ function setupRefresh() {
 
   // Optional: auto-refresh every 10 seconds
   setInterval(fetchLeaderboardData, 10000);
-}
-function updateCrowdMeter(value) {
-  const bar = document.getElementById("crowd-meter");
-  if (!bar || isNaN(value)) return;
-
-  const clamped = Math.min(Math.max(value, 0), 100);
-  bar.style.width = `${clamped}%`;
 }
 
 // Initial setup
