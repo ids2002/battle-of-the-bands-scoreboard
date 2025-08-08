@@ -88,6 +88,23 @@ if (clamped >= 90) {
 }
 
 }
+function updateCrowdMeterFromData(data) {
+  // This assumes the crowd level is in a specific column of the player row
+  // We'll grab the second row and a specific column (e.g., 4th = index 3)
+
+  if (!data || data.length < 2) return;
+
+  const playerRow = data[1]; // second row = player
+  const rawValue = playerRow[3]; // Change index if your value is elsewhere
+  const crowdValue = parseFloat(rawValue);
+
+  if (!isNaN(crowdValue)) {
+    updateCrowdMeter(crowdValue);
+  } else {
+    console.warn("Crowd meter value is not a valid number:", rawValue);
+  }
+}
+
     }
   });
 }
