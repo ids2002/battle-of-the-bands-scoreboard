@@ -15,11 +15,11 @@ function updateCrowdMeter(value) {
 
   // Color segments
   let color = "green";
-  if (clamped > 75) {
+  if (clamped > 85) {
     color = "red";
-  } else if (clamped > 50) {
+  } else if (clamped > 70) {
     color = "orange";
-  } else if (clamped > 25) {
+  } else if (clamped > 33) {
     color = "yellow";
   }
 
