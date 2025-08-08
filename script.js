@@ -26,6 +26,20 @@ function updateCrowdMeter(value) {
   bar.style.backgroundColor = color;
 }
 
+function updateCrowdMeterFromData(data) {
+  if (!data || data.length < 2) return;
+
+  const playerRow = data[1]; // Row 2
+  const rawValue = playerRow[3]; // Column D = index 3
+  const crowdValue = parseFloat(rawValue);
+
+  if (!isNaN(crowdValue)) {
+    updateCrowdMeter(crowdValue);
+  } else {
+    console.warn("Invalid crowd meter value in D2:", rawValue);
+  }
+}
+
 // Load default theme
 function setDefaultTheme() {
   const themeEl = document.getElementById('theme-style');
