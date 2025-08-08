@@ -103,6 +103,19 @@ if (clamped >= 90) {
 }
 
 }
+function updateCrowdMeterFromData(data) {
+  if (!data || data.length < 2) return;
+
+  const playerRow = data[1]; // 2nd row = player band
+  const rawValue = playerRow[3]; // Adjust this index if needed
+  const crowdValue = parseFloat(rawValue);
+
+  if (!isNaN(crowdValue)) {
+    updateCrowdMeter(crowdValue);
+  } else {
+    console.warn("Invalid crowd meter value:", rawValue);
+  }
+}
     }
   });
 }
