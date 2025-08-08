@@ -93,43 +93,6 @@ function renderLeaderboard(data) {
   });
 }
 
-function updateCrowdMeterFromData(data) {
-  if (!Array.isArray(data) || data.length < 2 || !data[1][3]) {
-    console.warn("Crowd meter value not found in cell D2.");
-    return;
-  }
-
-  const rawValue = data[1][3]; // Column D = index 3
-  const numericValue = parseFloat(rawValue);
-  updateCrowdMeter(numericValue);
-}
-
-// Update the crowd meter based on a value from 0–100
-function updateCrowdMeter(value) {
-  const bar = document.getElementById("crowd-meter");
-  if (!bar || isNaN(value)) {
-    console.warn("Invalid crowd meter value:", value);
-    return;
-  }
-
-  const clamped = Math.min(Math.max(parseFloat(value), 0), 100);
-  bar.style.width = `${clamped}%`;
-}
-
-// Read the crowd value from the 4th column of the 2nd row
-function updateCrowdMeterFromData(data) {
-  if (!data || data.length < 2) return;
-
-  const playerRow = data[1]; // 2nd row = player band
-  const rawValue = playerRow[3]; // Index 3 = crowd meter value
-  const crowdValue = parseFloat(rawValue);
-
-  if (!isNaN(crowdValue)) {
-    updateCrowdMeter(crowdValue);
-  } else {
-    console.warn("Invalid crowd meter value:", rawValue);
-  }
-}
 
 // Button & auto-refresh
 function setupRefresh() {
