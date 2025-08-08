@@ -131,7 +131,7 @@ function setupRefresh() {
   }
 
   // Optional: auto-refresh every 10 seconds
-  setInterval(fetchLeaderboardData, 10000);
+  setInterval(fetchLeaderboardData, 5000);
 }
 
 // Initial setup
