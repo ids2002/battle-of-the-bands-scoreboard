@@ -68,7 +68,7 @@ select {
 #crowd-meter {
   height: 100%;
   width: 0%;
-  background: #f9c449;
+   background: linear-gradient(to right, #ffc107, #ff5722);
   transition: width 0.4s ease;
 }
 
