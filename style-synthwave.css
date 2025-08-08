@@ -24,24 +24,6 @@ body {
   color: #fff;
 }
 
-.crowd-meter label {
-  font-size: 1.2rem;
-  color: #fff;
-}
-
-#crowdSlider {
-  width: 60%;
-  margin: 1rem auto;
-}
-
-#crowdBar {
-  height: 20px;
-  background: linear-gradient(to right, #00f260, #0575e6);
-  border-radius: 10px;
-  margin-bottom: 2rem;
-  transition: width 0.3s ease;
-}
-
 #leaderboard {
   margin: 0 auto;
   text-align: center;
@@ -51,7 +33,6 @@ body {
   font-family: 'Orbitron', sans-serif;
 }
 
-}
 
 .leaderboard th, .leaderboard td {
   padding: 1rem;
