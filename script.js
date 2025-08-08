@@ -8,15 +8,23 @@ document.head.appendChild(papaScript);
 
 function updateCrowdMeter(value) {
   const bar = document.getElementById("crowd-meter");
-  if (!bar || isNaN(value)) {
-    console.warn("Invalid crowd meter value:", value);
-    return;
-}
+  if (!bar || isNaN(value)) return;
 
-  const clamped = Math.min(Math.max(parseFloat(value), 0), 100);
+  const clamped = Math.min(Math.max(value, 0), 100);
   bar.style.width = `${clamped}%`;
-}
 
+  // Color segments
+  let color = "green";
+  if (clamped > 75) {
+    color = "red";
+  } else if (clamped > 50) {
+    color = "orange";
+  } else if (clamped > 25) {
+    color = "yellow";
+  }
+
+  bar.style.backgroundColor = color;
+}
 
 // Load default theme
 function setDefaultTheme() {
