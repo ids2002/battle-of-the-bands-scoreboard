@@ -77,21 +77,32 @@ select {
 }
 
 .crowd-meter-container {
-  width: 100%;
-  max-width: 600px;
+  width: 60%;
   height: 25px;
-  background-color: #333;
-  border: 2px solid #999;
-  border-radius: 4px;
-  margin: 20px auto;
+  background-color: #222;
+  border: 2px solid #555;
+  border-radius: 20px;
+  margin: 1rem auto;
   overflow: hidden;
+  box-shadow: 0 0 10px #000;
 }
 
-#meter-bar {
+#crowd-meter-fill {
   height: 100%;
   width: 0%;
-  background-color: #2d9cdb; /* default blue */
-  transition: width 0.5s ease-in-out, background-color 0.3s;
+  background: linear-gradient(to right, #f0c000, #f27c00);
+  transition: width 0.5s ease, background 0.3s ease;
+  border-radius: 20px 0 0 20px;
+}
+
+#crowd-meter-fill.pulse {
+  animation: pulse-glow 1s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 5px #ff4500; }
+  50% { box-shadow: 0 0 15px #ff4500; }
+  100% { box-shadow: 0 0 5px #ff4500; }
 }
 
 .player-highlight {
