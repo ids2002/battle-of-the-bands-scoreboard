@@ -110,6 +110,13 @@ function setupRefresh() {
   // Optional: auto-refresh every 10 seconds
   setInterval(fetchLeaderboardData, 10000);
 }
+function updateCrowdMeter(value) {
+  const bar = document.getElementById("crowd-meter");
+  if (!bar || isNaN(value)) return;
+
+  const clamped = Math.min(Math.max(value, 0), 100);
+  bar.style.width = `${clamped}%`;
+}
 
 // Initial setup
 function initialize() {
