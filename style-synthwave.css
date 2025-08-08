@@ -104,6 +104,23 @@ select {
   50% { box-shadow: 0 0 15px #ff4500; }
   100% { box-shadow: 0 0 5px #ff4500; }
 }
+#crowd-critical {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #ff3300;
+  font-weight: bold;
+  animation: flash 1s infinite;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
 
 .player-highlight {
   background-color: rgba(255, 255, 255, 0.15);
