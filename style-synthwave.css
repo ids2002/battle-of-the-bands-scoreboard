@@ -121,11 +121,8 @@ select {
   50% { opacity: 0.2; }
 }
 
-
 .player-highlight {
   background-color: rgba(255, 255, 255, 0.15);
   font-weight: bold;
   color: #ffd700;
 }
-
-
