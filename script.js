@@ -12,16 +12,6 @@ function setStyle(styleName) {
         styleEl.setAttribute("href", `style-${styleName.toLowerCase()}.css`);
     }
 }
-function updateCrowdMeterFromData(data) {
-  // Look for a row that contains the crowd meter value
-  const crowdRow = data.find(row => row['Band Name'] === 'Crowd Meter');
-  if (!crowdRow || !crowdRow['Score']) return;
-
-  const value = parseFloat(crowdRow['Score']);
-  if (!isNaN(value)) {
-    updateCrowdMeter(value);
-  }
-}
 
 async function fetchLeaderboardData() {
   try {
@@ -71,8 +61,26 @@ function updateCrowdMeter(value) {
 
   const clamped = Math.min(Math.max(value, 0), 100);
   bar.style.width = `${clamped}%`;
-}
+}  
+function updateCrowdMeter(value) {
+  const bar = document.getElementById("crowd-meter-fill");
+  if (!bar || isNaN(value)) return;
 
+  const clamped = Math.max(0, Math.min(100, value));
+  bar.style.width = `${clamped}%`;
+
+  // Change color dynamically
+  if (clamped < 50) {
+    bar.style.background = 'linear-gradient(to right, #f0c000, #f0a000)';
+    bar.classList.remove('pulse');
+  } else if (clamped < 80) {
+    bar.style.background = 'linear-gradient(to right, #f27c00, #ff6600)';
+    bar.classList.remove('pulse');
+  } else {
+    bar.style.background = 'linear-gradient(to right, #ff3300, #cc0000)';
+    bar.classList.add('pulse'); // Glowing at high energy
+  }
+}
     }
   });
 }
