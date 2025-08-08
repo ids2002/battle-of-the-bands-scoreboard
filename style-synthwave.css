@@ -42,12 +42,15 @@ body {
   transition: width 0.3s ease;
 }
 
-table.leaderboard {
-  width: 80%;
-  margin: auto;
+#leaderboard {
+  margin: 0 auto;
+  text-align: center;
   border-collapse: collapse;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #ff00cc;
+  width: 80%;
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+}
+
 }
 
 .leaderboard th, .leaderboard td {
@@ -59,11 +62,6 @@ table.leaderboard {
   background-color: #1a1a40;
   color: #fff;
   font-size: 1.1rem;
-}
-
-.leaderboard td {
-  font-size: 1rem;
-  color: #e0e0e0;
 }
 
 select {
