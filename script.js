@@ -41,7 +41,6 @@ async function fetchLeaderboardData() {
   }
 }
 
-
 function renderLeaderboard(data) {
   const table = document.getElementById("leaderboard");
   table.innerHTML = "";
@@ -65,9 +64,6 @@ function renderLeaderboard(data) {
     if (index === 0) {
       row.style.backgroundColor = "#ffcc00";   // Customize as needed
       row.style.fontWeight = "bold";
-    }
-  });
-}
 
 function updateCrowdMeter(value) {
   const bar = document.getElementById('crowd-meter');
@@ -77,3 +73,6 @@ function updateCrowdMeter(value) {
   bar.style.width = `${clamped}%`;
 }
 
+    }
+  });
+}
