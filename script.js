@@ -33,13 +33,17 @@ async function fetchLeaderboardData() {
   try {
     const response = await fetch(LEADERBOARD_CSV_URL);
     const csvText = await response.text();
-    const data = Papa.parse(csvText, {
-      header: false,
-      skipEmptyLines: true,
+
+    const parsed = Papa.parse(csvText, {
+      header: false,           // <=== use false for raw row access
+      skipEmptyLines: true
     }).data;
 
-    renderLeaderboard(data);
-    updateCrowdMeterFromData(data);
+    console.log(parsed);
+
+    renderLeaderboard(parsed);
+    updateCrowdMeterFromData(parsed);  // <=== this is the key new line
+
   } catch (err) {
     console.error("Failed to fetch leaderboard:", err);
   }
@@ -81,20 +85,27 @@ function renderLeaderboard(data) {
   });
 }
 
-// Update the crowd meter based on a value from 0–100
 function updateCrowdMeterFromData(data) {
-  if (!data || data.length < 2) return;
-
-  const playerRow = data[1];
-  const rawValue = playerRow[3];
-
-  if (!rawValue || isNaN(rawValue)) {
-    console.warn("Invalid crowd meter value:", rawValue);
+  if (!Array.isArray(data) || data.length < 2 || !data[1][3]) {
+    console.warn("Crowd meter value not found in cell D2.");
     return;
   }
 
-  const crowdValue = parseFloat(rawValue);
-  updateCrowdMeter(crowdValue);
+  const rawValue = data[1][3]; // Column D = index 3
+  const numericValue = parseFloat(rawValue);
+  updateCrowdMeter(numericValue);
+}
+
+// Update the crowd meter based on a value from 0–100
+function updateCrowdMeter(value) {
+  const bar = document.getElementById("crowd-meter");
+  if (!bar || isNaN(value)) {
+    console.warn("Invalid crowd meter value:", value);
+    return;
+  }
+
+  const clamped = Math.min(Math.max(parseFloat(value), 0), 100);
+  bar.style.width = `${clamped}%`;
 }
 
 // Read the crowd value from the 4th column of the 2nd row
