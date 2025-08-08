@@ -1,113 +1,89 @@
 const LEADERBOARD_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSUGmZrVnQpHFVXKj-TesONikDj1kSG-4pNIYymZSPODYqyrMlMBDml8_qVsUrvxTpS5KTL_p6hncoC/pub?gid=946014061&single=true&output=csv';
 
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("btn-refresh").addEventListener("click", fetchLeaderboardData);
-    fetchLeaderboardData();
-    setInterval(fetchLeaderboardData, 30000);
-});
+// Load Papaparse
+const papaScript = document.createElement('script');
+papaScript.src = 'https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js';
+papaScript.onload = initialize;
+document.head.appendChild(papaScript);
 
-function setStyle(styleName) {
-    const styleEl = document.getElementById("theme-style");
-    if (styleEl) {
-        styleEl.setAttribute("href", `style-${styleName.toLowerCase()}.css`);
-    }
-function updateCrowdMeterFromData(data) {
-  // This assumes the crowd level is in a specific column of the player row
-  // We'll grab the second row and a specific column (e.g., 4th = index 3)
-
-  if (!data || data.length < 2) return;
-
-  const playerRow = data[1]; // second row = player
-  const rawValue = playerRow[3]; // Change index if your value is elsewhere
-  const crowdValue = parseFloat(rawValue);
-
-  if (!isNaN(crowdValue)) {
-    updateCrowdMeter(crowdValue);
-  } else {
-    console.warn("Crowd meter value is not a valid number:", rawValue);
+// Load default theme
+function setDefaultTheme() {
+  const themeEl = document.getElementById('theme-style');
+  if (themeEl) {
+    themeEl.setAttribute('href', 'style-synthwave.css');
   }
 }
 
-function fetchLeaderboardData() {
-  fetch(LEADERBOARD_CSV_URL)
-    .then(response => response.text())
-    .then(csvText => {
-      const data = Papa.parse(csvText, {
-        header: false,
-        skipEmptyLines: true,
-      }).data;
+setDefaultTheme();
 
-      renderLeaderboard(data);
-      updateCrowdMeterFromData(data);  // ✅ Here’s where it’s used
-    })
-    .catch(error => {
-      console.error("Failed to fetch leaderboard:", error);
-    });
+// Fetch leaderboard CSV
+async function fetchLeaderboardData() {
+  try {
+    const response = await fetch(LEADERBOARD_CSV_URL);
+    const csvText = await response.text();
+    const data = Papa.parse(csvText, {
+      header: false,
+      skipEmptyLines: true,
+    }).data;
+
+    renderLeaderboard(data);
+    updateCrowdMeterFromData(data);
+  } catch (err) {
+    console.error("Failed to fetch leaderboard:", err);
+  }
 }
 
-
+// Render leaderboard rows
 function renderLeaderboard(data) {
-  const table = document.getElementById("leaderboard");
-  table.innerHTML = "";
+  const table = document.getElementById('leaderboard');
+  table.innerHTML = '';
 
-  // Add header row
-  const header = table.insertRow();
-  ["Rank", "Band Name", "Score"].forEach(text => {
-    const cell = header.insertCell();
-    cell.textContent = text;
-    cell.style.fontWeight = "bold";
+  // Header row
+  const header = document.createElement('tr');
+  ['Rank', 'Band Name', 'Score'].forEach(text => {
+    const th = document.createElement('th');
+    th.textContent = text;
+    header.appendChild(th);
   });
+  table.appendChild(header);
 
-  // Add band rows
-  data.forEach((band, index) => {
-    const row = table.insertRow();
-    row.insertCell().textContent = band.Rank || index;       // Rank
-    row.insertCell().textContent = band["Band Name"];         // Band Name
-    row.insertCell().textContent = band.Score;                // Score
+  data.forEach((row, i) => {
+    if (i === 0) return; // skip header if present
+    const tr = document.createElement('tr');
 
-    // Highlight the first data row (player band)
-    if (index === 0) {
-      row.style.backgroundColor = "#ffcc00";   // Customize as needed
-      row.style.fontWeight = "bold";
+    const rank = row[0] || '--';
+    const name = row[1] || '';
+    const score = row[2] || '--';
 
+    [rank, name, score].forEach((text, j) => {
+      const td = document.createElement('td');
+      td.textContent = text;
+      tr.appendChild(td);
+    });
+
+    if (i === 1) {
+      tr.classList.add('highlight'); // highlight second row (player band)
+    }
+
+    table.appendChild(tr);
+  });
+}
+
+// Update the crowd meter based on a value from 0–100
 function updateCrowdMeter(value) {
   const bar = document.getElementById('crowd-meter');
   if (!bar || isNaN(value)) return;
 
   const clamped = Math.min(Math.max(value, 0), 100);
   bar.style.width = `${clamped}%`;
-}  
-function updateCrowdMeter(value) {
-  const bar = document.getElementById("crowd-meter-fill");
-  if (!bar || isNaN(value)) return;
-
-  const clamped = Math.max(0, Math.min(100, value));
-  bar.style.width = `${clamped}%`;
-
-  // Change color dynamically
-  if (clamped < 50) {
-    bar.style.background = 'linear-gradient(to right, #f0c000, #f0a000)';
-    bar.classList.remove('pulse');
-  } else if (clamped < 80) {
-    bar.style.background = 'linear-gradient(to right, #f27c00, #ff6600)';
-    bar.classList.remove('pulse');
-  } else {
-    bar.style.background = 'linear-gradient(to right, #ff3300, #cc0000)';
-    bar.classList.add('pulse'); // Glowing at high energy
-  }
-    const critical = document.getElementById("crowd-critical");
-if (clamped >= 90) {
-  critical.classList.remove("hidden");
-} else {
-  critical.classList.add("hidden");
 }
 
-}
+// Read the crowd value from the 4th column of the 2nd row
 function updateCrowdMeterFromData(data) {
   if (!data || data.length < 2) return;
 
   const playerRow = data[1]; // 2nd row = player band
-  const rawValue = playerRow[3]; // Adjust this index if needed
+  const rawValue = playerRow[3]; // Index 3 = crowd meter value
   const crowdValue = parseFloat(rawValue);
 
   if (!isNaN(crowdValue)) {
@@ -116,6 +92,20 @@ function updateCrowdMeterFromData(data) {
     console.warn("Invalid crowd meter value:", rawValue);
   }
 }
-    }
-  });
+
+// Button & auto-refresh
+function setupRefresh() {
+  const button = document.getElementById('btn-refresh');
+  if (button) {
+    button.addEventListener('click', fetchLeaderboardData);
+  }
+
+  // Optional: auto-refresh every 10 seconds
+  setInterval(fetchLeaderboardData, 10000);
+}
+
+// Initial setup
+function initialize() {
+  fetchLeaderboardData();
+  setupRefresh();
 }
